@@ -7,7 +7,7 @@ import (
 )
 
 func TestLogRotation(t *testing.T) {
-	w := NewLogRotation(SetFileName("./test.log"), SetLimitUseMaxLines(1))
+	w := NewLogRotation(SetFileName("./test.log"), SetLimitUseMaxLines(1), EnableStdOut())
 	w.Launch()
 	log.SetOutput(w)
 	log.Println("test 1")
