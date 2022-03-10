@@ -29,7 +29,7 @@ log_rotation、log_truncation、logrus、zap、std log
     logRota := NewLogRotation(SetFileName("./test.log"), SetLimitUseMaxLines(1000))
     // 启动日志异步写入，必写，否则会导致日志文件堆积，不写入文件！
     logRota.Launch()
-    log.SetOutput(w)
+    log.SetOutput(logRota)
     log.Println("test 1")
     ```
     ### zap uber开源的日志包
@@ -39,7 +39,7 @@ log_rotation、log_truncation、logrus、zap、std log
     // 启动日志异步写入，必写，否则会导致日志文件堆积，不写入文件！
     logRota.Launch()
     var encoder = zap.NewDevelopmentEncoderConfig()
-    core := zapcore.NewCore(zapcore.NewConsoleEncoder(encoder), zapcore.AddSync(m), zap.DebugLevel)
+    core := zapcore.NewCore(zapcore.NewConsoleEncoder(encoder), zapcore.AddSync(logRota), zap.DebugLevel)
     logger := zap.New(core)
     logger.Info("test msg", zap.Int("line", 22))
     ```
@@ -49,7 +49,7 @@ log_rotation、log_truncation、logrus、zap、std log
     logRota := NewLogRotation(SetFileName("./test.log"), SetLimitUseMaxLines(1000))
     // 启动日志异步写入，必写，否则会导致日志文件堆积，不写入文件！
     logRota.Launch()
-    logrus.SetOutput(m)
+    logrus.SetOutput(logRota)
     logrus.Println("test log")
     ```
 ## 基准测试
