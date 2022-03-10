@@ -31,6 +31,7 @@ type LogRotation struct {
 	linkQueue    *uChan
 	fpCreateTime time.Time
 	fp           *os.File
+	enableStdOut bool
 	limitCount   struct {
 		size  int64
 		lines uint64
@@ -156,6 +157,13 @@ func SetLimitUseFileSize(kb int64) Option {
 	}
 }
 
+// EnableStdOut 同时启用日志到标准输出,默认关闭
+func EnableStdOut() Option {
+	return func(rotation *LogRotation) {
+		rotation.enableStdOut = true
+	}
+}
+
 // SetFileName 设置日志文件名，可包含路径，保存格式：{path}/{fileBaseName}-{yyy_MM_dd}-{uniqueId}.{fileExt}
 func SetFileName(f string) Option {
 	return func(rotation *LogRotation) {
@@ -181,6 +189,9 @@ func SetFileName(f string) Option {
 // Writer 实现io.Writer
 func (rotation *LogRotation) Write(p []byte) (n int, err error) {
 	//fmt.Println(string(p))
+	if rotation.enableStdOut {
+		_, _ = os.Stdout.Write(p)
+	}
 	select {
 	case rotation.isReady <- struct{}{}:
 		rotation.linkQueue.put(p)

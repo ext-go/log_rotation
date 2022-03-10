@@ -19,6 +19,7 @@ log_rotation、log_truncation、logrus、zap、std log
 - SetLimitUseTime: 通过时间进行文件分割，*建议值 > time.Hour * 1*
 - SetLimitUseFileSize: 通过文件大小进行文件分割，*传入单位为kb，建议值 > 1024kb*
 - 以上Limit类型需传入`NewLogRotation`函数，且只生效最后一个，故建议只使用一个限制类型
+- 如果您需要同时开启控制台输出，请使用 `EnableStdOut()` 进行设置
 
 ## 使用说明
 - 此包实现自定义io.Write接口，实现日志文件的异步写入以及分割
