@@ -1,5 +1,11 @@
 # Go日志文件归档包（自动分割日志文件）
 log_rotation、log_truncation、logrus、zap、std log
+
+## 使用
+```bash
+go get -u github.com/ext-go/log_rotation
+```
+
 ## 归档类型
 
 - 按日志文件大小进行归档
@@ -65,7 +71,8 @@ BenchmarkNewLogRotation/log-4            2562033               419.4 ns/op
              124 B/op          2 allocs/op
 PASS
 ```
-- 本包内置一个自动扩容、缩容的队列实现 [查看源码](./queue.go)
+
+## 本包内置一个自动扩容、缩容的队列实现 [查看源码](./queue.go)
 
     - 基准测试
 
